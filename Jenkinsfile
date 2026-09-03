@@ -11,19 +11,19 @@ pipeline {
 
         stage('Setup Environment') {
             steps {
-                sh 'python3 --version'
+                bat 'python --version'
             }
         }
 
         stage('Run Factorial Program') {
             steps {
-                sh 'python3 factorial.py'
+                bat 'python factorial.py'
             }
         }
 
         stage('Archive Output') {
             steps {
-                sh 'python3 factorial.py > output.txt'
+                bat 'python factorial.py > output.txt'
                 archiveArtifacts artifacts: 'output.txt', fingerprint: true
             }
         }
