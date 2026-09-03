@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/LakshmiNarayanan-R0411/factorial-jenkins-dem.git'
+            }
+        }
+
+        stage('Setup Environment') {
+            steps {
+                sh 'python3 --version'
+            }
+        }
+
+        stage('Run Factorial Program') {
+            steps {
+                sh 'python3 factorial.py'
+            }
+        }
+
+        stage('Archive Output') {
+            steps {
+                sh 'python3 factorial.py > output.txt'
+                archiveArtifacts artifacts: 'output.txt', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
